@@ -9,11 +9,6 @@ from pyspark.sql.functions import lead, udf, struct, col
 
 ### haversine distance
 def haversine(lon1, lat1, lon2, lat2):
-    """
-    Calculate the great circle distance between two points 
-    on the earth (specified in decimal degrees)
-    """
-    # convert decimal degrees to radians 
     lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
     # haversine formula 
     dlon = lon2 - lon1 
@@ -61,7 +56,6 @@ table_data = sc.newAPIHadoopRDD(
     'com.google.gson.JsonObject',
     conf = conf)
 
-## convert table to a json like object, turn PosTime and Fseen back into numbers... not sure why they changed
 vals = table_data.values()
 vals = vals.map(lambda line: json.loads(line))
 vals = vals.map(To_numb)
